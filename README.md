@@ -35,25 +35,25 @@ INSTALL
 
 Requirements
 ------------
-Some test programs or utility tools uses SDL or PNG, but the library itself
-has no dependencies. You can skip compiling those tools if you want not to
-install programs using SDL or PNG.
+
+You need the following in order to build qrencode:
+
+- [FeOS and FeOS SDK](https://github.com/fincs/FeOS "FeOS")
 
 Compile & install
 -----------------
-Just try
 
-./configure
-make
-make install
+    cd $FEOSSDK/userlib
+    git clone git://github.com/mtheall/libqrencode.git
+    cd /path/to/FeOS
+    make libinstall
 
 This compiles and installs the library and header file to the appropriate
-directories. By default, /usr/local/lib and /usr/local/include. You can change
-the destination directory by passing some options to the configure script.
-Run "./configure --help" to see the list of options.
+directories. By default, $FEOSDEST/data/FeOS/lib.
 
-It also installs a binary "qrencode" to /usr/local/bin. If you want not to
-install it, give "--without-tools" option to the configure script.
+You can also use "qrencode" shared lib as a standalone program. It will
+create a QR code with each supplied argument concatenated with an embedded
+newline '\n' character between each argument.
 
 
 USAGE
@@ -61,18 +61,20 @@ USAGE
 Basic usages of this library are written in the header file (qrencode.h).
 You can generate a manual of the library by using Doxygen.
 
+In your C/C++ source:
+
+    #include <qrencode.h>
+
+In your Makefile:
+
+    CONF_USERLIBS := qrencode
+    CONF_LIBS     := -lqrencode
 
 WARNINGS
 ========
 The library is distributed WITHOUT ANY WRRANTY.
 
 Micro QR Code support is EXPERIMENTAL.
-
-Be careful to use the command line tool (qrencode) if it is used by a web
-application (e.g. CGI script). For example, giving "-s" option with a large
-number to qrencode may cause DoS. The parameters should be checked by the
-application.
-
 
 LICENSING INFORMATION
 =====================
@@ -110,6 +112,10 @@ or submit issues to:
 https://github.com/fukuchi/libqrencode/issues
 
 Questions of license compliance are also welcome.
+
+For FeOS-specific issues:
+
+https://github.com/mtheall/libqrencode/issues
 
 
 ACKNOWLEDGMENTS
